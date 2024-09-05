@@ -53,7 +53,7 @@ vector <vector<string>>guardarinstrucciones(const string& nombreArchivo){
     }
     return resultado;
 }
-void pause(){
+void pause(int PC , int ALU,int ACC, string MAR, string MDR,vector<string> UC,vector<string> ICR,unordered_map<string, int> memoria){
     string optionP;
     int optionF;
     string dirM;
@@ -73,10 +73,9 @@ void pause(){
         switch(optionF) {
             case 1:
                 cout << "Ingresa la Direccion de memoria: ";
-                cin >> dirM;
-                // Buscar la clave en el diccionario
+                getline (cin, dirM);
                 if(memoria.find(dirM) != memoria.end()) {
-                    cout << endl <<"El Dato es: " << memoria[dirM] << endl;
+                    cout << endl <<"El Dato es: "<< memoria[dirM] << endl;
                 } else {
                     cout << "DIRRECCION INVALIDA" << endl;
                 }
@@ -123,7 +122,6 @@ void pause(){
 
 void ejecutarInstrucciones(vector<vector<string>>& instrucciones,int PC , int ALU,unordered_map<string, int> memoria) {
     for (int i = 0 ; i < instrucciones.size(); i++) {
-        
         PC = i+1;
         MAR = to_string(i);
         MDR = ""; for(int m = 0 ; m < instrucciones[i].size(); m++){ MDR+= instrucciones[i][m];}
@@ -213,7 +211,7 @@ void ejecutarInstrucciones(vector<vector<string>>& instrucciones,int PC , int AL
                 cout << MAR << ": " << memoria[UC[1]] << endl;
             }
         } else if (UC[0] == "PAUSE"){
-            pause();
+            pause(PC,ALU,ACC,MAR,MDR,UC,ICR,memoria);
         } else if (UC[0] == "END"){
             break;
         }
